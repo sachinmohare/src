@@ -1,0 +1,8 @@
+<!-- <div  class="overlay">
+   <mat-progress-spinner class="spinner" [color]="color" [value]="value" [mode]="mode"></mat-progress-spinner> 
+  <mat-progress-bar [color]="color" [value]="value" [mode]="mode"></mat-progress-bar>
+  </div> -->
+
+<div id="postloader" *ngIf="isLoading | async">
+    <div id="status">&nbsp;</div>
+</div>

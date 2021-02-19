@@ -1,0 +1,80 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+
+        <div class="col-md-12 col-sm-12 col-xs-12">
+
+            <div class="col-6 col-md-6 col-sm-12">
+                <mat-form-field>
+                    <input matInput type="text" placeholder="Search by name.." autocomplete="off" [(ngModel)]="searchText" />
+                </mat-form-field>
+            </div>
+            <div class="col-6 col-md-6 col-sm-12" *ngIf="genericService.hasRole(['SA'])">
+
+                <form>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Filter By Active/Inactive</mat-label>
+                        <mat-select (selectionChange)="selectedText = selectedFor.value" #selectedFor name="food">
+                            <mat-option value=""> All </mat-option>
+                            <mat-option value="1"> Activated Users </mat-option>
+                            <mat-option value="0"> Inactivated Users </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </form>
+            </div>
+
+
+            <div class="col-12 col-md-12 col-sm-12 text-right">
+                <pagination-controls (pageChange)="p=$event"></pagination-controls>
+            </div>
+
+
+            <table id="example" class="table table-striped table-bordered margin-top15 margin-bottomzero">
+                <thead>
+                    <tr style="border-bottom: 1px solid #ddd;" class="bg-grey padding">
+
+                        <th scope="col" class="font-weight500">Techician No.</th>
+                        <th scope="col" class="font-weight500">Techician Name</th>
+                        <th scope="col" class="font-weight500">Techician Email</th>
+                        <th scope="col" class="font-weight500">Techician Phone</th>
+                        <th scope="col" class="font-weight500" *ngIf="genericService.hasRole(['SA'])">Status</th>
+                        <td scope="col" class="font-weight500" style="text-align: center;">Action</td>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let RespData of techniciansList | filter:searchText | filter:selectedText | paginate:{itemsPerPage:20,currentPage:p};index as i" class="d-flex">
+
+                        <td class="row col-1">{{RespData.user_id}}</td>
+                        <td class="word-break-itempage">{{RespData.user_name}}</td>
+                        <td class="word-break-itempage">{{RespData.user_email}}</td>
+                        <td class="word-break-itempage">{{RespData.user_phone}}</td>
+                        <td class="word-break-itempage" *ngIf="genericService.hasRole(['SA'])">
+                            <mat-slide-toggle [checked]="RespData.status == 1 ? true:false" (change)="statusChanged($event,RespData.user_id)"></mat-slide-toggle>
+                        </td>
+
+                        <td style="text-align: center;">
+                            <span style="margin-right: 5px; cursor: pointer;">
+              <a routerLink="edit-technicians/{{RespData.user_id}}" title="Edit">
+                <mat-icon>edit</mat-icon>
+              </a>
+              <a (click)="deleteTechinician(RespData,i)" title="Delete" *ngIf="genericService.hasRole(['A','SA'])">
+                <mat-icon>delete</mat-icon>
+              </a>
+              <a (click)="viewTechnician(RespData)" title="View Details">
+                <mat-icon>preview</mat-icon>
+              </a>
+
+              <!-- <a routerLink="view-leads/{{RespData.user_id}}"  title="View Details">
+                <mat-icon>preview</mat-icon>
+              </a>
+               -->
+
+            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,133 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+
+            <mat-card class="card">
+                <mat-card-header>
+                    <mat-card-title>Update Your Profile</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <form [formGroup]="userProfileForm" class="form-horizontal" (ngSubmit)="onSubmit()">
+                        <div class="row">
+
+                            <div class="col-md-6" *ngIf="selectedType == 4">
+                                <mat-form-field class="full-width">
+                                    <input matInput [placeholder]="selectedType ==4 ? 'Organisation Name':'' " formControlName="user_company_name" autocomplete="off">
+                                    <mat-error *ngIf="hasError('user_name', 'required')">{{selectedType ==4 ? 'Organisation ':'Your' }} Name Name is required.</mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-md-6">
+                                <mat-form-field class="full-width">
+                                    <input matInput [placeholder]="selectedType ==4 ? 'Organisation Contact person name':' Your Profile Name' " formControlName="user_name" autocomplete="off">
+                                    <mat-error *ngIf="hasError('user_name', 'required')">
+                                        {{selectedType ==4 ? 'Organisation Contact person':'Your' }} Name is required.</mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-md-6">
+                                <mat-form-field class="full-width">
+                                    <textarea matInput [placeholder]="selectedType ==4 ? 'Organisation addredd':' Your Profile address' " formControlName="user_address" required></textarea>
+                                    <mat-error *ngIf="hasError('user_address', 'required')">{{selectedType ==4 ? 'Organisation':' Your' }} address is requred</mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-md-6">
+                                <mat-form-field class="full-width">
+                                    <input matInput [placeholder]="selectedType ==4 ? 'Organisation contact email':' Your profile email' " formControlName="user_email" autocomplete="off">
+                                    <mat-error *ngIf="hasError('user_email', 'required')">{{selectedType ==4 ? 'Organisation':' Your' }} email is required.</mat-error>
+                                    <mat-error *ngIf="hasError('user_email', 'email')">Email Should be Valid.</mat-error>
+                                </mat-form-field>
+                            </div>
+
+
+
+                            <div class="col-md-6">
+                                <mat-form-field class="full-width">
+                                    <input matInput [placeholder]="selectedType ==4 ? 'Organisation contact number':' Your profile phone number' " formControlName="user_phone" autocomplete="off">
+                                    <mat-error *ngIf="hasError('user_phone', 'required')">{{selectedType ==4 ? 'Organisation':' Your' }} phone is required.</mat-error>
+                                    <mat-error *ngIf="hasError('user_phone', 'pattern')">Phone Should be Valid.</mat-error>
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+
+
+                        <mat-card-actions>
+
+                            <button mat-raised-button type="submit" class="btn btn-primary btn-lg">Update</button>
+
+                        </mat-card-actions>
+
+                    </form>
+
+                </mat-card-content>
+
+            </mat-card>
+        </div>
+    </div>
+</div>
+
+<br><br>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+
+            <mat-card class="card">
+                <mat-card-header>
+                    <mat-card-title>Update Your Security Settings</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <form [formGroup]="securityForm" class="form-horizontal" (ngSubmit)="onSubmitSecuritySettings()">
+                        <div class="row">
+
+
+                            <div class="col-md-4">
+                                <mat-form-field class="full-width">
+                                    <input matInput [type]="hide ? 'password' : 'text'" placeholder="Old Passsword" formControlName="user_old_password" autocomplete="off">
+                                    <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                    <mat-error *ngIf="hasSecurityError('user_old_password', 'required')">Old Password is required.</mat-error>
+                                    <mat-error *ngIf="hasSecurityError('user_old_password', 'minlength')">Passsword should have minimum 6 characters.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-md-4">
+                                <mat-form-field class="full-width">
+                                    <input matInput [type]="hide ? 'password' : 'text'" placeholder="Create New Passsword" formControlName="user_password" autocomplete="off">
+                                    <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                    <mat-error *ngIf="hasSecurityError('user_password', 'required')">Password is required.</mat-error>
+                                    <mat-error *ngIf="hasSecurityError('user_password', 'minlength')">Passsword should have minimum 6 characters.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
+
+                            <div class="col-md-4">
+                                <mat-form-field class="full-width">
+                                    <input matInput [type]="hide ? 'password' : 'text'" placeholder="Confirm New Password " formControlName="user_confirmpassword" autocomplete="off">
+                                    <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                    <mat-error *ngIf="hasSecurityError('user_confirmpassword', 'required')">Technician Phone is required.
+                                    </mat-error>
+                                    <mat-error *ngIf="hasSecurityError('user_confirmpassword', 'pattern')">Phone Should be Valid.</mat-error>
+                                    <mat-error *ngIf="hasSecurityError('user_confirmpassword', 'minlength')">Confirm Passsword should have minimum 6 characters.</mat-error>
+                                    <mat-error *ngIf="hasSecurityError('user_confirmpassword', 'NoPassswordMatch')">Password & Confirm Password should be Match.</mat-error>
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+
+
+                        <mat-card-actions>
+                            <button mat-raised-button type="submit" class="btn btn-primary btn-lg">Update</button>
+                        </mat-card-actions>
+
+                    </form>
+
+                </mat-card-content>
+
+            </mat-card>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,47 @@
+	.register-page {
+	    /* box-shadow: 2px 1px 2px 1px rgba(0, 0, 0, .5);
+	    margin: auto;
+	    position: relative;
+        top: 24%; */
+	    position: relative;
+	    /* left: 50%; */
+	    /* transform: translate(-50%, -50%);
+	    -webkit-transform: translate(-50%, -50%);
+	    -moz-transform: translate(-50%, -50%);
+	    -o-transform: translate(-50%, -50%);
+	    -ms-transform: translate(-50%, -50%); */
+	}
+	
+	.register-page {
+	    margin: 0;
+	    position: absolute;
+	    top: 6%;
+	    left: 50%;
+	    -ms-transform: translate(-50%, -5%);
+	    transform: translate(-50%, -5%);
+	}
+	
+	.regform {
+	    position: relative;
+	    z-index: 1;
+	    background: #FFFFFF;
+	    margin: 0 auto 100px;
+	    padding: 30px 45px 30px 45px;
+	    text-align: center;
+	    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+	}
+	
+	@media(max-width:480px) {
+	    .regform {
+	        padding: 30px 20px 30px 20px;
+	    }
+	    .register-page {
+	        width: 100%;
+	    }
+	}
+	
+	.otp-field {
+	    text-align: center;
+	    font-size: 18px;
+	    font-weight: 600;
+	}

@@ -1,0 +1,11 @@
+::ng-deep .mat-input-element{
+    box-shadow: none !important;
+}
+::ng-deep input.mat-input-element {
+    margin-top: -1.0625em;
+}
+
+::ng-deep .mat-tooltip.tooltip {
+    background-color: darkblue;
+    font-size: 16px;
+  }

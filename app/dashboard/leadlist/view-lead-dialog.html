@@ -1,0 +1,57 @@
+<h2 mat-dialog-title>{{ data.company_name }}</h2>
+<mat-dialog-content class="mat-typography">
+    <h3><strong> Complaint : </strong>
+    </h3>
+    <p>{{ data.complaint_desc }}</p>
+
+    <h3><strong>This Lead current status is : </strong></h3>
+    <p>
+        <mat-chip-list aria-label="Fish selection">
+            The complaint is
+            <mat-chip color="danger" *ngIf="data.status.Complaint_status==0" selected>
+                {{data.status.Complaint_message}}</mat-chip>
+            <mat-chip style="background-color: green;" *ngIf="data.status.Complaint_status==1" selected>
+                {{data.status.Complaint_message}}</mat-chip>
+            <mat-chip color="primary" *ngIf="data.status.Complaint_status==2" selected>{{data.status.Complaint_message}}
+            </mat-chip>
+            <mat-chip color="warn" *ngIf="data.status.Complaint_status==3" selected>{{data.status.Complaint_message}}
+            </mat-chip>
+        </mat-chip-list>
+    </p>
+
+
+    <h3><strong>Address of the Company: </strong></h3>
+    <p>{{data.company_address}}</p>
+
+
+    <h3><strong>Lead raised on : </strong></h3>
+    <p>{{data.complaint_date | date:'dd/MM/yyyy'}} {{data.complaint_date | date:'HH:mm' | convertFrom24To12Format}}</p>
+
+
+    <h3><strong>Contact Person Name: </strong></h3>
+    <p>{{data.customer_name}}</p>
+
+    <h3><strong>Contact Mobile Number: </strong></h3>
+    <p>{{data.customer_mobile}}</p>
+
+
+    <ng-container *ngIf="data.solution !='' && data.solution !=null">
+        <h3><strong>The Solution Given By Technician: </strong></h3>
+        <p>{{data.solution}}</p>
+    </ng-container>
+
+    <h3><strong>Assigned Techincian Details: </strong></h3>
+    <ng-container *ngIf="data.technician_id !=0 && data.technician_id !=null">
+        <p>Name : {{data.technician_name}}</p>
+        <p>Phone : {{data.technician_phone}}</p>
+    </ng-container>
+
+
+    <ng-container *ngIf="data.technician_id == 0 || data.technician_id ==null">
+        <p>No Technician Assigned to this Lead </p>
+    </ng-container>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>

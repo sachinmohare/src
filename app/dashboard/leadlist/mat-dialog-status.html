@@ -1,0 +1,23 @@
+<h1 mat-dialog-title>Change status Of "{{data.company_name}}" Lead</h1>
+<div mat-dialog-content>
+    <p>please select status</p>
+
+    <mat-form-field>
+        <mat-chip-list aria-label="Fish selection">
+            <mat-chip color="primary" *ngIf="!genericService.hasRole(['ORG','NU'])" (click)="changeStatus(0,'New');showInput=false;">New</mat-chip>
+            <mat-chip color="success" (click)="changeStatus(1,'Completed');showInput=true;">Completed</mat-chip>
+            <mat-chip color="danger" *ngIf="!genericService.hasRole(['ORG','NU'])" (click)="changeStatus(2,'Pending');showInput=true;">Pending</mat-chip>
+            <mat-chip color="warning" (click)="changeStatus(3,'Failed');showInput=true;">Failed</mat-chip>
+        </mat-chip-list>
+    </mat-form-field>
+    <br>
+    <mat-form-field *ngIf="showInput">
+        <input matInput placeholder="Please Enter The Description" [(ngModel)]="description" [required]="showInput">
+    </mat-form-field>
+
+</div>
+
+<div mat-dialog-actions>
+    <button mat-button (click)="onCancel()">No Thanks</button>
+    <button mat-button (click)="onOk()" cdkFocusInitial>Ok</button>
+</div>

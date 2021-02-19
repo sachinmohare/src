@@ -1,0 +1,24 @@
+<style>
+    .mat-radio-button~.mat-radio-button {
+        margin-left: 16px;
+    }
+</style>
+<mat-dialog-content>
+    <H3>New Registration</H3>
+    Please select The type of the registration
+    <br><br>
+    <p>
+        <mat-radio-group aria-label="Select an option" (change)="selectionChange($event)">
+            <mat-radio-button value="4">Organisation</mat-radio-button>
+            <mat-radio-button value="5">Normal Customer</mat-radio-button>
+        </mat-radio-group>
+    </p>
+
+
+    <mat-error *ngIf="showError">Please select the Option First</mat-error>
+
+
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button mat-raised-button color="primary" (click)="onConfirmClick()" tabindex="1">Proceed</button>
+</mat-dialog-actions>

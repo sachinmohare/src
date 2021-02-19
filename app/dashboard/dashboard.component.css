@@ -1,0 +1,15 @@
+.nav.navbar-nav {
+    float: right !important;
+    margin-right: 1pc;
+    margin-top: 11px;
+}
+
+.otp-field {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.navbar.navbar-inverse.navbar-fixed-top.inventory{
+z-index: 999 !important;
+}

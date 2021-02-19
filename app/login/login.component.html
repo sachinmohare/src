@@ -1,0 +1,70 @@
+<div style="background:url('/assets/Css/images/teal-abstract-background.png'); height:100vh;background-repeat: no-repeat !important;
+background-position: center !important;
+background-size: cover !important;
+height: 100vh;">
+    <div class="bottom-left">TCDS CMS</div>
+    <div class="login-page" *ngIf="stepsTOVerify == 0">
+        <div class="login-header">Login</div>
+        <div class="form">
+            <form name="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+                <div class="form-group">
+                    <label class="loginLabel">Username</label>
+                    <input type="text" placeholder="username" class="form-control" formControlName="username" autocomplete="off" name="username" required [ngClass]="{ 'is-invalid': f1.submitted && f1.username.invalid}" />
+                    <div *ngIf="f1.submitted && f1.username.invalid" class="invalid-feedback">
+                        <div *ngIf="f1.username.errors.required" style="color: red;">UserName is required</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="loginLabel">Passward</label>
+                    <input type="password" formControlName="password" placeholder="password" class="form-control" autocomplete="off" name="password" required [ngClass]="{ 'is-invalid': f1.submitted && f1.password.invalid}" />
+                    <div *ngIf="f1.submitted && f1.password.invalid" class="invalid-feedback">
+                        <div *ngIf="f1.password.errors.required" style="color: red;">Password is required</div>
+                    </div>
+                    <a href="javascript:void(0)" (click)="stepsTOVerify = 1">Forgot Password</a>
+                </div>
+                <button type="submit" class="btn" [disabled]="!loginForm.valid" matTooltip="Login">Login</button>
+
+                <br><br>
+                <a href="javascript:void(0)" routerLink="/tcds-registration">Don't Have Account? New Register</a>
+            </form>
+        </div>
+    </div>
+
+
+
+    <!-- forgot password -->
+    <div class="login-page" *ngIf="stepsTOVerify != 0">
+        <div class="login-header">Forgot Password</div>
+        <div class="form">
+            <form name="form">
+
+                <div class="form-group" *ngIf="stepsTOVerify == 1">
+                    <label class="loginLabel">Please enter Your email</label>
+                    <input type="text" #emailId [(ngModel)]="emailToVerify" placeholder="Your email id" class="form-control" autocomplete="off" name="username" required />
+                    <button type="button" class="btn" (click)="sendMailVerification(emailId)" matTooltip="Login">Send OTP</button>
+
+
+                    <br><br>
+                    <a href="javascript:void(0)" (click)="stepsTOVerify = 0">Return to login !</a>
+
+                </div>
+
+                <div class="form-group" *ngIf="stepsTOVerify == 2">
+                    <label class="loginLabel">Please enter OTP</label>
+                    <small> <i> Check your '{{emailToVerify}}' for OTP </i></small>
+                    <input type="text" class="form-control otp-field" #otpToVerify><br>
+                    <button type="button" class="btn" (click)="verifyOtp(otpToVerify)" matTooltip="Verify">Verify</button>
+                </div>
+
+                <div class="form-group" *ngIf="stepsTOVerify == 3">
+                    <label class="loginLabel">Create New Password</label>
+                    <input type="password" placeholder="Create New Password" class="form-control" #newpass autocomplete="off" name="username" required />
+                    <button type="button" class="btn" matTooltip="create" (click)="createNewPassword(newpass)">Create New Password</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

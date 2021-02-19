@@ -1,0 +1,201 @@
+<!-- <div class="container-fluid">
+  <div class="row" style=" margin:0">
+    <div class="col-md-12 col-sm-12 col-xs-12" style="background-color: cadetblue;">
+           <label style="color: white;font-size: 17px;margin-bottom: 1px;"><h3>Stock Master</h3></label>
+      </div>
+   </div>
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="tiles-border bg-white margin-right33">
+        <div class="row padding-top10">
+          <div class="col-md-6 col-sm-12 col-xs-12">
+              <form #stockMasterForm="ngForm">
+               <div class="tilesform-border margin-top">
+                   <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                      <div class="form-group form-content cashpage-height">
+                        <mat-form-field hideRequiredMarker="true">
+                          <input matInput placeholder="Item Name" [(ngModel)]="model.stock.name" name="name"
+                            value={{model.stock.name|capitalizeFirst}} pattern="^(?=[\S\s]{2,60}$)[\S\s]*" autocomplete="off"
+                            required #itemName="ngModel">
+                        </mat-form-field>
+                        <div class="txt-danger-wrap" *ngIf="itemName.errors && (itemName.dirty || itemName.touched)">
+                          <mat-hint class="text-danger font-12" [hidden]="!itemName.errors.pattern">
+                            {{model.errorMessage.name}}
+                          </mat-hint>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                      <div class="form-group form-content cashpage-height">
+                        <mat-form-field hideRequiredMarker="true">
+                          <input matInput placeholder="Item Number" [(ngModel)]="model.stock.productId" name="productId"
+                            value={{model.stock.productId}} pattern="^[1-9]\d*$" autocomplete="off"
+                            required #productId="ngModel">
+                        </mat-form-field>
+                        <div class="txt-danger-wrap" *ngIf="productId.errors && (productId.dirty || productId.touched)">
+                          <mat-hint class="text-danger font-12" [hidden]="!productId.errors.pattern">
+                            {{model.errorMessage.productId}}
+                          </mat-hint>
+                        </div>
+                      </div>
+                    </div>
+
+                    <button id="Reset" matTooltip="Reset" class="submit-btn btn btn-secondary btn-property" type="button" (click)="clearAll();model.update=false">Clear</button>
+                    <button  id="save" class="submit-btn btn btn-secondary btn-property submitButton" type="submit" [disabled]="!stockMasterForm.valid "
+                    matTooltip="Save" (click)="save();">{{ !model.update ? 'Save' : 'update' }}</button>
+               </div>
+              </div>
+           </form>
+          </div>
+          <div class="col-md-6 col-sm-12 col-xs-12">
+            <table id="example" class="table table-striped table-bordered margin-top15 margin-bottomzero">
+                 <thead>
+                   <tr style="border-bottom: 1px solid #ddd;" class="bg-grey padding">
+                     <td class="font-weight500">Sr.No.</td>
+                     <td class="font-weight500">Item Name</td>
+                     <td class="font-weight500">Item Number</td>
+                     <td class="font-weight500" style="text-align: center;">Action</td>
+                   </tr>
+                 </thead>
+
+                 <tbody>
+                   <tr *ngFor="let st of model.stockList; let i =index">
+                     <td>{{ i+1 }}</td>
+                     <td class="word-break-itempage">{{ st.name }}</td>
+                     <td class="word-break-itempage">{{ st.productId }}</td>
+                     <td style="text-align: center;">
+                          <span style="margin-right: 5px; cursor: pointer;">
+                            <a  (click)="edit(st)" title="Edit"> 
+                              <mat-icon>edit</mat-icon>
+                            </a>  |
+                            <a  (click)="delete(st)" title="Delete">  
+                              <mat-icon>delete</mat-icon>
+                            </a>
+                            </span>
+                       </td>
+                   </tr>
+                 </tbody>
+           </table>
+          </div>
+       </div>
+     </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+
+            <mat-card class="card">
+                <mat-card-header>
+                    <mat-card-title>Add Complaints</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <form [formGroup]="addcomplaintsForm" class="form-horizontal" (ngSubmit)="onSubmit()">
+                        <div class="row">
+                            <div class="col-md-6" *ngIf="!this.genericService.hasRole(['NU'])">
+                                <mat-form-field class="full-width">
+                                    <!-- <input matInput placeholder="Company Name" formControlName="companyname" [(ngModel)]="companyname" required> -->
+
+                                    <input type="text" placeholder="Select or Enter Company name" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto" formControlName="user_company_name" />
+                                    <mat-autocomplete (optionSelected)="onSelectionChanged($event)" #auto="matAutocomplete" [displayWith]="getOptionText">
+                                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option.user_company_name">
+                                            {{option.user_company_name}}
+                                         </mat-option>
+                                    </mat-autocomplete>
+
+                                    <mat-error *ngIf="hasError('user_company_name', 'required')">Company Name is required.</mat-error>
+                                </mat-form-field>
+                                <!-- <mat-label >Standard form field</mat-label> -->
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <mat-form-field class="full-width">
+                                    <input matInput placeholder="Lead Contact person Name" formControlName="user_name" required>
+                                    <mat-error *ngIf="hasError('user_name', 'required')">Customer Name is required.</mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <mat-form-field class="full-width">
+                                    <textarea matInput placeholder="Lead Contact Address" formControlName="user_address" style="left: 10px;" required></textarea>
+                                    <mat-error *ngIf="hasError('user_address', 'required')">Address is requred</mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <mat-form-field class="full-width">
+                                    <input matInput placeholder="Lead Contact person mobile No." formControlName="user_phone" required>
+                                    <mat-error *ngIf="hasError('user_phone', 'required')">Mobile No. is required</mat-error>
+                                    <mat-error *ngIf="hasError('user_phone', 'pattern')">Mobile No. must be a valid pattern</mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-md-6">
+                                <mat-form-field class="full-width">
+                                    <input matInput placeholder="Lead Contact Person email id." formControlName="user_email" required>
+                                    <mat-error *ngIf="hasError('user_email', 'required')">Email id is required</mat-error>
+                                    <mat-error *ngIf="hasError('user_email', 'email')">Email id must be a valid</mat-error>
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+
+
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <mat-form-field class="full-width">
+                                    <input matInput placeholder="Lead Subject (Please enter your requirement description)" formControlName="user_complaint" required>
+                                    <mat-error *ngIf="hasError('user_complaint', 'required')">Please enter Your description is required.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+
+                        <div class="row" *ngIf="genericService.hasRole(['A','SA'])">
+                            <div class="col-md-6">
+                                <mat-checkbox (change)="showDropDown()" formControlName="isAssined">Assign Technician
+                                </mat-checkbox>
+                            </div>
+                            <div class="col-md-6" *ngIf="isShow">
+                                <mat-form-field class="full-width">
+                                    <mat-label>Select Technician</mat-label>
+                                    <mat-select style="left: 10px;" formControlName="technician_id" required>
+                                        <mat-option *ngFor="let RespData of getApi" [value]="RespData.user_id">{{RespData.user_name}}
+                                        </mat-option>
+                                    </mat-select>
+
+                                    <mat-error *ngIf="hasError('technician_id', 'required')">Please select technician </mat-error>
+
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <mat-card-actions>
+                            <button *ngIf="!isForUpdate" mat-raised-button type="button" class="btn btn-primary btn-lg" (click)="onSubmit()">Add</button>
+                            <button *ngIf="isForUpdate" mat-raised-button type="button" class="btn btn-primary btn-lg" (click)="updateData()">Update</button>
+                            <button *ngIf="isForUpdate" mat-raised-button type="button" class="btn btn-primary btn-lg" routerLink="/dashboard/view-leads">Back</button>
+                            <button *ngIf="!isForUpdate && genericService.hasRole(['A','SA','T'])" mat-raised-button type="button" class="btn btn-secondary btn-lg" (click)="clearData()">Clear</button>
+                        </mat-card-actions>
+
+                    </form>
+
+                </mat-card-content>
+
+            </mat-card>
+        </div>
+    </div>
+</div>

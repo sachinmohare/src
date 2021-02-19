@@ -1,0 +1,160 @@
+<div style="background:url('/assets/Css/images/teal-abstract-background.png'); height:100vh;background-repeat: no-repeat !important;
+background-position: center !important;
+background-size: cover !important;
+height: 100%;">
+    <div class="container">
+        <div class="row ">
+            <div class="register-page col-8 col-md-8 col-sm-12">
+                <div class="login-header">New Registration</div>
+                <div class="regform">
+                    <form name="form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                        <div class="form-group">
+                            <label class="">Please select Registration Type</label>
+                            <br><br>
+                            <mat-radio-group aria-label="Select an option" (change)="selectionChange($event)" formControlName="user_role">
+                                <mat-radio-button value="5">Normal Customer</mat-radio-button>
+                                <mat-radio-button value="4">Organisation</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+
+                        <ng-container *ngIf="selectedType ==4 || selectedType == 5">
+                            <div class="form-group" *ngIf="selectedType == 4">
+                                <label class="loginLabel">{{selectedType ==4 ? 'Organisation':'Customer' }} Name</label>
+                                <input type="text" class="form-control" formControlName="user_company_name" autocomplete="off" name="username" required [ngClass]="{ 'is-invalid': submittedReg && f1.user_company_name.invalid}" />
+                                <div *ngIf="submittedReg && f1.user_company_name.invalid" class="invalid-feedback">
+                                    <div *ngIf="f1.user_company_name.errors.required" style="color: red;">Organisation Name is required</div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="loginLabel">{{selectedType == 4 ? 'Organisation Concern Person ':'Customer' }}
+                                    Name</label>
+                                <input type="text" class="form-control" formControlName="user_name" autocomplete="off" name="user_name" required [ngClass]="{ 'is-invalid': submittedReg && f1.user_name.invalid}" />
+                                <div *ngIf="submittedReg && f1.user_name.invalid" class="invalid-feedback">
+                                    <span class="invalid-feedback" style="color: red;" *ngIf="f1.user_name.errors.required">
+                                        Name is required
+                                    </span>
+                                    <!-- <span class="invalid-feedback" *ngIf="(!f.middleName.errors.required  && f.middleName.errors.cannotContainSpace)"> Please enter valid Middle Name</span> -->
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6 col-md-6 col-sm-12 form-group">
+                                    <label class="loginLabel">{{selectedType ==4 ? 'Organisation':'Customer' }}
+                                        Email</label>
+                                    <input type="text" class="form-control" formControlName="user_email" autocomplete="off" name="user_email" required [ngClass]="{ 'is-invalid': submittedReg && f1.user_email.invalid}" />
+                                    <div *ngIf="submittedReg && f1.user_email.invalid" class="invalid-feedback">
+                                        <div *ngIf="f1.user_email.errors.required" style="color: red;">
+                                            {{selectedType ==4 ? 'Organisation':'Customer' }} Email is required</div>
+                                        <div *ngIf="f1.user_email.errors.email" style="color: red;">
+                                            Email should be valid</div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-6 col-md-6 col-sm-12 form-group">
+                                    <label class="loginLabel">{{selectedType ==4 ? 'Organisation':'Customer' }}
+                                        Phone</label>
+                                    <input type="text" class="form-control" formControlName="user_phone" autocomplete="off" name="user_phone" required [ngClass]="{ 'is-invalid': submittedReg && f1.user_phone.invalid}" />
+                                    <div *ngIf="submittedReg && f1.user_phone.invalid" class="invalid-feedback">
+                                        <div *ngIf="f1.user_phone.errors.required" style="color: red;">
+                                            {{selectedType ==4 ? 'Organisation':'Customer' }} Phone is required</div>
+                                        <div *ngIf="f1.user_phone.errors.pattern" style="color: red;">
+                                            please enter valid phone number</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="loginLabel">{{selectedType ==4 ? 'Organisation':'Customer' }}
+                                    Address</label>
+                                <input type="text" class="form-control" formControlName="user_address" autocomplete="off" name="user_address" required [ngClass]="{ 'is-invalid': submittedReg && f1.user_address.invalid}" />
+                                <div *ngIf="submittedReg && f1.user_address.invalid" class="invalid-feedback">
+                                    <div *ngIf="f1.user_address.errors.required" style="color: red;">
+                                        {{selectedType ==4 ? 'Organisation':'Customer' }} address is required</div>
+                                </div>
+                            </div>
+
+                            <!-- <div class="form-group">
+                                <label class="loginLabel">Create {{selectedType ==4 ? 'Organisation':'Customer' }}
+                                    Username</label>
+                                <input type="text" class="form-control" formControlName="user_username" autocomplete="off" name="user_username" required [ngClass]="{ 'is-invalid': submittedReg && f1.user_username.invalid}" />
+                                <div *ngIf="submittedReg && f1.user_username.invalid" class="invalid-feedback">
+                                    <div *ngIf="f1.user_username.errors.required" style="color: red;">
+                                        {{selectedType ==4 ? 'Organisation':'Customer' }} username is required</div>
+                                </div>
+                            </div> -->
+
+                            <div class="row">
+                                <div class="col-6 col-md-6 col-sm-12 form-group">
+                                    <label class="loginLabel">Create {{selectedType ==4 ? 'Organisation':'Customer' }}
+                                        Passward</label>
+                                    <input type="password" class="form-control" formControlName="user_password" autocomplete="off" name="user_password" required [ngClass]="{ 'is-invalid': submittedReg && f1.user_password.invalid}" />
+                                    <div *ngIf="submittedReg && f1.user_password.invalid" class="invalid-feedback">
+                                        <div *ngIf="f1.user_password.errors.required" style="color: red;">
+                                            {{selectedType ==4 ? 'Organisation':'Customer' }} Password is required</div>
+                                        <div *ngIf="!f1.user_password.errors.required && f1.user_password.errors.minlength" style="color: red;">
+                                            Password should have minimum 6 characters</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-6 col-md-6 col-sm-12 form-group">
+                                    <label class="loginLabel">Confirm {{selectedType ==4 ? 'Organisation':'Customer' }}
+                                        Password</label>
+                                    <input type="password" class="form-control" formControlName="user_confirmpassword" autocomplete="off" name="user_confirmpassword" required [ngClass]="{ 'is-invalid': submittedReg && f1.user_confirmpassword.invalid}" />
+                                    <div *ngIf="submittedReg && f1.user_confirmpassword.invalid" class="invalid-feedback">
+                                        <div *ngIf="f1.user_confirmpassword.errors.required" style="color: red;">
+                                            {{selectedType ==4 ? 'Organisation':'Customer' }} confirm password is required
+                                        </div>
+                                        <div *ngIf="!f1.user_confirmpassword.errors.required && f1.user_confirmpassword.errors.minlength" style="color: red;">
+                                            Confirm password should have minimum 6 characters</div>
+                                        <div *ngIf="!f1.user_confirmpassword.errors.required && hasError('user_confirmpassword', 'NoPassswordMatch')" style="color: red;">
+                                            Confirm-Password must match with password</div>
+
+                                        <!-- <span class="invalid-feedback" *ngIf="hasError('confirmPassword', 'mustMatch')"> Confirm-Password must match with password  </span> -->
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <button type="submit" class="btn btn-success">Register</button>
+                        </ng-container>
+
+                        <br><br>
+                        <a href="javascript:void(0)" routerLink="/login">Already Have an Account? Login</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<ng-template #dialogVerifyEmail>
+    <mat-dialog-content>
+        <h3><strong> Your Registration Success </strong></h3>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="center">
+
+        <mat-dialog-content [ngSwitch]="stepsTOVerify">
+            <div class="form-group" *ngSwitchCase="1">
+                <h4 style="color:green">Please Verify your email</h4>
+                <input type="text" class="form-control" *ngIf="emailToVerify != null" [disabled]="isVerifyEmailDisabled" [(ngModel)]="emailToVerify"><br>
+                <button mat-raised-button color="primary" (click)="sendMailVerification()" tabindex="1">Proceed</button>
+            </div>
+            <div class="form-group" *ngSwitchCase="2">
+                <h4>Please Enter OTP</h4>
+                <small> <i> Check your '{{emailToVerify}}' for OTP </i></small>
+                <input type="text" class="form-control otp-field" #otpToVerify>
+                <a href="javascript:void(0);" (click)="isVerifyEmailDisabled=false;stepsTOVerify =1">Could Not get OTP ?</a><br><br>
+                <button mat-raised-button color="primary" (click)="verifyOtp(otpToVerify)" tabindex="1">Verify</button>
+            </div>
+        </mat-dialog-content>
+
+    </mat-dialog-actions>
+
+</ng-template>

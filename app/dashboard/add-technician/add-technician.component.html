@@ -1,0 +1,94 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+
+            <mat-card class="card">
+                <mat-card-header>
+                    <mat-card-title>Add Technician</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <form [formGroup]="addtechnicianForm" class="form-horizontal" (ngSubmit)="onSubmit()">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <mat-form-field class="full-width">
+                                    <input matInput placeholder="Enter Technician Name" formControlName="user_name" autocomplete="off">
+                                    <mat-error *ngIf="hasError('user_name', 'required')">Technician Name is required.</mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-md-6">
+                                <mat-form-field class="full-width">
+                                    <textarea matInput placeholder="Enter Technician Full Address" formControlName="user_address" required></textarea>
+                                    <mat-error *ngIf="hasError('user_address', 'required')">Address is requred</mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-md-6">
+                                <mat-form-field class="full-width">
+                                    <input matInput placeholder="Enter Technician Email" formControlName="user_email" autocomplete="off">
+                                    <mat-error *ngIf="hasError('user_email', 'required')">Technician Email is required.</mat-error>
+                                    <mat-error *ngIf="hasError('user_email', 'email')">Email Should be Valid.</mat-error>
+                                </mat-form-field>
+                            </div>
+
+
+
+                            <div class="col-md-6">
+                                <mat-form-field class="full-width">
+                                    <input matInput placeholder="Enter Technician Phone" formControlName="user_phone" autocomplete="off">
+                                    <mat-error *ngIf="hasError('user_phone', 'required')">Technician Phone is required.</mat-error>
+                                    <mat-error *ngIf="hasError('user_phone', 'pattern')">Phone Should be Valid.</mat-error>
+                                </mat-form-field>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <mat-form-field class="full-width">
+                                    <input matInput placeholder="Create Technician Username" formControlName="user_username" autocomplete="off">
+                                    <mat-error *ngIf="hasError('user_username', 'required')">Technician username is required.</mat-error>
+                                    <mat-error *ngIf="hasError('user_username', 'minlength')">Username should have minimum 6 characters.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <mat-form-field class="full-width">
+                                    <input matInput [type]="hide ? 'password' : 'text'" placeholder="Create Technician Passsword" formControlName="user_password" autocomplete="off">
+                                    <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                    <mat-error *ngIf="hasError('user_password', 'required')">Technician Password is required.</mat-error>
+                                    <mat-error *ngIf="hasError('user_password', 'minlength')">Passsword should have minimum 6 characters.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <mat-form-field class="full-width">
+                                    <input matInput [type]="hide ? 'password' : 'text'" placeholder="Enter Confirm-Password " formControlName="user_confirmpassword" autocomplete="off">
+                                    <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                    <mat-error *ngIf="hasError('user_confirmpassword', 'required')">Technician Phone is required.
+                                    </mat-error>
+                                    <mat-error *ngIf="hasError('user_confirmpassword', 'pattern')">Phone Should be Valid.</mat-error>
+                                    <mat-error *ngIf="hasError('user_confirmpassword', 'minlength')">Confirm Passsword should have minimum 6 characters.</mat-error>
+                                    <mat-error *ngIf="hasError('user_confirmpassword', 'NoPassswordMatch')">Password & Confirm Password should be Match.</mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+
+                        <mat-card-actions>
+                            <button *ngIf="!isForUpdate" mat-raised-button type="submit" class="btn btn-primary btn-lg">Add</button>
+                            <button *ngIf="isForUpdate" mat-raised-button type="button" class="btn btn-primary btn-lg" (click)="updateData()">Update</button>
+                            <button *ngIf="isForUpdate" mat-raised-button type="button" class="btn btn-primary btn-lg" routerLink="/dashboard/view-technicians">Back</button>
+                            <button *ngIf="!isForUpdate" mat-raised-button type="button" class="btn btn-secondary btn-lg" (click)="clearData()">Clear</button>
+                        </mat-card-actions>
+
+                    </form>
+
+                </mat-card-content>
+
+            </mat-card>
+        </div>
+    </div>
+</div>

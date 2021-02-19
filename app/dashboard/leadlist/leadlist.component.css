@@ -1,0 +1,17 @@
+@media(max-width:1002px) {
+    .mat-standard-chip {
+        padding: 3px 6px !important;
+        height: auto !important
+    }
+}
+
+.mat-standard-chip {
+    padding: 0px 9px !important;
+    border-radius: 13px !important;
+    min-height: 27px !important;
+    font-size: 11px !important;
+}
+
+td{
+    text-align: center !important;
+}

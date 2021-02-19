@@ -1,0 +1,125 @@
+<div class="container-fluid">
+  <div class="row" style=" margin:0">
+    <div class="col-md-12 col-sm-12 col-xs-12" style="background-color: cadetblue;">
+           <label style="color: white;font-size: 17px;margin-bottom:1px;"><h3>Report</h3></label>
+      </div>
+   </div>
+   <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="tiles-border bg-white margin-right33">
+        <div class="row padding-top10">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <form #reportForm="ngForm" class="basic-form">
+              <div class="tilesform-border margin-top">
+                   <div class="row">
+                     
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                      <div class="form-group form-content cashpage-height">
+                        <mat-form-field>
+                          <mat-chip-list #itemInvChipList>
+                            <mat-chip *ngFor="let stock of model.selectStockList" [selectable]="model.view.autocomplete.selectable"
+                              [removable]="model.view.autocomplete.removable"
+                              (removed)="autocomplete.remove(stock,model.selectStockList)">
+                              {{stock.name}}
+                              <mat-icon matChipRemove *ngIf="model.view.autocomplete.removable">cancel</mat-icon>
+                            </mat-chip>
+                            <input placeholder="Search Item" #itemInvInput [formControl]="itemInvlCtrl" [matAutocomplete]="itemInvlAuto"
+                              [matChipInputFor]="itemInvChipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" required
+                              (matChipInputTokenEnd)="autocomplete.clear($event,itemInvlCtrl)">
+                          </mat-chip-list>
+                          <mat-autocomplete #itemInvlAuto="matAutocomplete"
+                            (optionSelected)="autocomplete.select($event,model.selectStockList,itemInvInput,itemInvlCtrl, true)">
+                            <mat-option *ngFor="let stock of filterStockList | async" [value]="stock">
+                              {{stock.name}}
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                         
+                      <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="form-group form-content cashpage-height">
+                          <mat-form-field hideRequiredMarker="true">
+                            <input [min]="model.today" matInput [matDatepicker]="picker"  placeholder="FromDate" dateMask  #picker="ngModel"
+                              [(ngModel)]="model.report.fromDate" (ngModelChange)="setMinDate(model.report.fromDate)" name="picker" autocomplete="off">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                          </mat-form-field>
+                        </div>
+                      </div>
+
+                      <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="form-group form-content cashpage-height">
+                          <mat-form-field hideRequiredMarker="true">
+                            <input [min]="minDate" matInput [matDatepicker]="picker1"  placeholder="ToDate" dateMask
+                            [disabled]="!model.report.fromDate"
+                              [(ngModel)]="model.report.toDate" name="toDate" autocomplete="off">
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      
+                      <div class="col-offset-md-5">
+                        <button id="Reset" matTooltip="Reset" class="submit-btn btn btn-secondary btn-property" type="button" (click)="clearAll()">Clear</button>
+                        <button id="save" matTooltip="Reset" class="submit-btn btn btn-secondary btn-property submitButton" type="submit"
+                         [disabled]="(model.selectStockList.length ===0 && !model.report.fromDate )||  !reportForm.valid "
+                          (click)="getReport();reportForm.resetForm()">Submit</button>
+                          <button id="Reset" matTooltip="Export" class="submit-btn btn btn-secondary btn-property" type="button" 
+                          [disabled]="model.reportList.length ===0" (click)="exportToExcel()">Export</button>
+                        </div>
+                    </div>
+               </div>
+           </form>
+          </div>
+          
+           <div class="col-md-12 col-sm-12 col-xs-12 bottom6-for-voucherledger">
+           <div class=" table-border bg-white">
+             <div class="">
+               <div class="table-heading">
+                 <div class="col-md-4" style="padding-top: 3px;">
+                   <span style="color:white;font-weight: bold;">Report </span>
+                 </div>
+                 <div class="col-md-4 text-center" style="padding-top: 5px !important;"></div>
+                 <div class="col-md-4"></div>
+               </div>
+
+             <table class="table table-hover ">
+               <thead>
+                  <tr class="border-bottom">
+                   <td width="3%">Sr.No</td>
+                   <td width="10%" class="text-center">Item Name</td>
+                   <td width="10%" class="text-center">Date</td>
+                   <td width="8%" class="text-center">Part No.</td>
+                   <td width="8%" class="text-center">Finished Part No.</td>
+                   <td width="5%" class="text-center">Primary Weight</td>
+                   <td width="5%" class="text-center">Finished weight</td>
+                   <td width="10%%" class="text-center">Total Cost</td> 
+                  </tr>
+               </thead>
+               <tbody>
+                 <tr *ngFor="let row of model.reportList; let i=index;">
+                   <td width="3%" class="cursor-pointer">{{ i+1 }}</td>
+                   <td width="10%" class="text-center cursor-pointer">
+                    <b><a (click)="updateStock(row)"> {{ row?.name }} </a></b>
+                    </td>
+                   <td width="10%" class="text-center cursor-pointer">{{ row.date | date: 'MM/dd/yyyy'}}</td>
+                   <td width="10%" class="text-center cursor-pointer">{{ row.partNumber }}</td>
+                   <td width="10%" class="text-center cursor-pointer">{{ row.finishItemNumber }}</td>
+                   <td width="10%" class="text-center cursor-pointer">{{ row.primaryWeight }}</td>
+                   <td width="10%" class="text-center cursor-pointer">{{ row.finishWeight }}</td>
+                   <td width="10%" class="text-center cursor-pointer">{{ row.totalCost }}</td>
+                 </tr>
+               </tbody>
+             </table>
+             <div class="m-0 text-center" style="margin-top:10px; color:red;" *ngIf="model.reportList.length ===0">
+              <h4>No Records Found</h4>
+            </div>
+           </div>
+         </div>
+       </div>
+       </div>
+     </div>
+    </div>
+  </div>
+</div>    

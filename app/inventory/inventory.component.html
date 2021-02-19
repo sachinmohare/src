@@ -1,0 +1,146 @@
+<div class="container-fluid">
+  <div class="row" style=" margin:0">
+    <div class="col-md-12 col-sm-12 col-xs-12" style="background-color: cadetblue;">
+           <label style="color: white;font-size: 17px;margin-top: 3px;margin-bottom: 1px;"><h3>Inventory</h3></label>
+      </div>
+   </div>
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="tiles-border bg-white margin-right33">
+        <div class="row padding-top10">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+              
+            <form #inventoryForm="ngForm" class="basic-form">
+              <div class="tilesform-border margin-top">
+                   <div class="row">
+                    
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                      <div class="form-group form-content cashpage-height">
+                        <mat-form-field>
+                          <mat-chip-list #itemInvChipList>
+                            <mat-chip *ngFor="let stock of model.selectStockList" [selectable]="model.view.autocomplete.selectable"
+                              [removable]="model.view.autocomplete.removable"
+                              (removed)="autocomplete.remove(stock,model.selectStockList)">
+                              {{stock.name}}
+                              <mat-icon matChipRemove *ngIf="model.view.autocomplete.removable">cancel</mat-icon>
+                            </mat-chip>
+                            <input placeholder="Search Item" #itemInvInput [formControl]="itemInvlCtrl" [matAutocomplete]="itemInvlAuto"
+                              [matChipInputFor]="itemInvChipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" required
+                              (matChipInputTokenEnd)="autocomplete.clear($event,itemInvlCtrl)">
+                          </mat-chip-list>
+                          <mat-autocomplete #itemInvlAuto="matAutocomplete"
+                            (optionSelected)="autocomplete.select($event,model.selectStockList,itemInvInput,itemInvlCtrl, true)">
+                            <mat-option *ngFor="let stock of filterStockList | async" [value]="stock">
+                              {{stock.name}}
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                         
+                      <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="form-group form-content cashpage-height">
+                          <mat-form-field hideRequiredMarker="true">
+                            <input [min]="model.today" matInput [matDatepicker]="picker" required placeholder="Date" dateMask
+                              [(ngModel)]="model.inventory.date" name="date" autocomplete="off">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                          </mat-form-field>
+                        </div>
+                      </div>
+
+                      <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="form-group form-content cashpage-height">
+                        <mat-form-field hideRequiredMarker="true">
+                          <input matInput placeholder="Part Number" value={{model.inventory.partNumber}}
+                            [(ngModel)]="model.inventory.partNumber" pattern="^[1-9]\d*$"
+                            name="partNumber" #partNumber="ngModel" required autocomplete="off">
+                        </mat-form-field>
+                        <div class="txt-danger-wrap" *ngIf="partNumber.errors && (partNumber.dirty || partNumber.touched)">
+                          <mat-hint class="text-danger font-12" [hidden]="!partNumber.errors.pattern">
+                            {{model.errorMessage.partNumber}}
+                          </mat-hint>
+                        </div>
+                      </div>
+                      </div>
+                      
+                       <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="form-group form-content cashpage-height">
+                          <mat-form-field hideRequiredMarker="true">
+                            <input matInput placeholder="Finish Part Number" value={{model.inventory.finishItemNumber}}
+                              [(ngModel)]="model.inventory.finishItemNumber" pattern="^[1-9]\d*$"
+                              name="finishItemNumber" #finishItemNumber="ngModel" required autocomplete="off">
+                          </mat-form-field>
+                          <div class="txt-danger-wrap" *ngIf="finishItemNumber.errors && (finishItemNumber.dirty || finishItemNumber.touched)">
+                            <mat-hint class="text-danger font-12" [hidden]="!finishItemNumber.errors.pattern">
+                              {{model.errorMessage.finishItemNumber}}
+                            </mat-hint>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="row">
+
+                     <div class="col-md-3 col-sm-6 col-xs-12">
+                       <div class="form-group form-content cashpage-height">
+                        <mat-form-field hideRequiredMarker="true">
+                          <input matInput placeholder="Primary Weight" value={{model.inventory.primaryWeight}}
+                            [(ngModel)]="model.inventory.primaryWeight" pattern="^[1-9]\d*$"
+                            name="primaryWeight" #primaryWeight="ngModel" required autocomplete="off">
+                        </mat-form-field>
+                        <div class="txt-danger-wrap" *ngIf="primaryWeight.errors && (primaryWeight.dirty || primaryWeight.touched)">
+                          <mat-hint class="text-danger font-12" [hidden]="!primaryWeight.errors.pattern">
+                            {{model.errorMessage.primaryWeight}}
+                          </mat-hint>
+                        </div>
+                      </div>
+                      </div>
+                         
+                      <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="form-group form-content cashpage-height">
+                          <mat-form-field hideRequiredMarker="true">
+                            <input matInput placeholder="Finish Weight" value={{model.inventory.finishWeight}}
+                              [(ngModel)]="model.inventory.finishWeight" pattern="^[1-9]\d*$"
+                              name="finishWeight" #finishWeight="ngModel" required autocomplete="off">
+                          </mat-form-field>
+                          <div class="txt-danger-wrap" *ngIf="finishWeight.errors && (finishWeight.dirty || finishWeight.touched)">
+                            <mat-hint class="text-danger font-12" [hidden]="!finishWeight.errors.pattern">
+                              {{model.errorMessage.finishWeight}}
+                            </mat-hint>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="form-group form-content cashpage-height">
+                          <mat-form-field hideRequiredMarker="true">
+                            <input matInput placeholder="Total Cost" value={{model.inventory.totalCost}}
+                              [(ngModel)]="model.inventory.totalCost" pattern="^[1-9]\d*$"
+                              name="totalCost" #totalCost="ngModel" required autocomplete="off">
+                          </mat-form-field>
+                          <div class="txt-danger-wrap" *ngIf="totalCost.errors && (totalCost.dirty || totalCost.touched)">
+                            <mat-hint class="text-danger font-12" [hidden]="!totalCost.errors.pattern">
+                              {{model.errorMessage.totalCost}}
+                            </mat-hint>
+                          </div>
+                        </div>
+                      </div>
+                   
+                    </div>
+                    
+
+                    <div class="col-offset-md-5">
+                    <button id="Reset" matTooltip="Reset" class="submit-btn btn btn-secondary btn-property" type="button" (click)="clearAll();model.update=false">Clear</button>
+                    <button id="save" matTooltip="Save" class="submit-btn btn btn-secondary btn-property submitButton" type="submit" [disabled]="!inventoryForm.valid "
+                      (click)="save();inventoryForm.resetForm()">{{ !model.update ? 'Save' : 'update' }}</button>
+                    </div>
+               </div>
+           </form>
+          </div>
+        
+       </div>
+     </div>
+    </div>
+  </div>
+</div>

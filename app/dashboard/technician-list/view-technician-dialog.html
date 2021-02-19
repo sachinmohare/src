@@ -1,0 +1,35 @@
+<h2 mat-dialog-title>Technician Details</h2>
+<mat-dialog-content class="mat-typography">
+    <h4>To View leads of {{ data.user_name }} , Click on view Leads Button</h4>
+    <a mat-raised-button type="submit" class="btn btn-lg" (click)="goToLeads(data.user_id)">View Leads of {{ data.user_name }}</a>
+    <hr>
+
+    <h3><strong> Techincian Name </strong></h3>
+    <p>{{ data.user_name }}</p>
+
+
+    <h3><strong> Techincian Address </strong></h3>
+    <p>{{ data.user_address }}</p>
+
+
+    <h3><strong> Techincian Mobile Number </strong></h3>
+    <p>
+        <mat-chip-list aria-label="Fish selection">
+            <mat-chip color="danger">
+                {{data.user_phone}}</mat-chip>
+        </mat-chip-list>
+    </p>
+
+    <h3><strong> Techincian Email </strong></h3>
+    <p>
+        <mat-chip-list aria-label="Fish selection">
+            <mat-chip color="danger">
+                {{data.user_email}}</mat-chip>
+        </mat-chip-list>
+    </p>
+
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>

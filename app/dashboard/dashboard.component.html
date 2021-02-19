@@ -1,0 +1,115 @@
+<ng-template #dialogVerifyEmail>
+    <mat-dialog-content>
+        <h3><strong> Account Verification </strong></h3>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="center">
+
+        <mat-dialog-content [ngSwitch]="stepsTOVerify">
+            <div class="form-group" *ngSwitchCase="1">
+                <h4 style="color:red">Please Verify your email</h4>
+                <small> <i> Your account is not verified yet </i></small>
+
+                <input type="text" class="form-control" *ngIf="emailToVerify != null" [disabled]="isVerifyEmailDisabled" [(ngModel)]="emailToVerify"><br>
+                <button mat-raised-button color="primary" (click)="sendMailVerification()" tabindex="1">Proceed</button>
+
+            </div>
+            <div class="form-group" *ngSwitchCase="2">
+                <h4>Please Enter OTP</h4>
+                <small> <i> Check your '{{emailToVerify}}' for OTP </i></small>
+                <input type="text" class="form-control otp-field" #otpToVerify>
+                <a href="javascript:void(0);" (click)="isVerifyEmailDisabled=false;stepsTOVerify =1">Could Not get OTP ?</a><br><br>
+                <button mat-raised-button color="primary" (click)="verifyOtp(otpToVerify)" tabindex="1">Verify</button>
+            </div>
+        </mat-dialog-content>
+
+    </mat-dialog-actions>
+
+</ng-template>
+
+
+<div id="wrapper">
+    <nav class="navbar navbar-inverse navbar-fixed-top inventory" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+                <div class="navbar-brand">
+                    <a id="menu-toggle" href="#" class="glyphicon glyphicon-align-justify btn-menu toggle">
+                    </a>
+                    <a [routerLink]="['stock-master']" style="color: white;font-size:21px;">CMS Management</a>
+                </div>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <button class="btn" title="Profile" routerLink="profile">
+                            Profile
+                        </button>
+                    </li>
+
+                    <li (click)="logout()">
+                        <button class="btn btn-xs logout-btn" title="Logout">
+             <mat-icon>logout</mat-icon>
+            </button>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="left-container" id="left-container">
+        <div id="sidebar-wrapper">
+            <nav id="spy">
+                <ul class="sidebar-nav nav">
+                    <li class="sidebar-brand" [routerLink]="['add-lead']">Add Lead</li>
+                    <li class="sidebar-brand" [routerLink]="['view-leads']">View Leads</li>
+                    <li class="sidebar-brand" [routerLink]="['add-technician']" *ngIf="genericService.hasRole(['A','SA'])">Add Technician</li>
+                    <li class="sidebar-brand" [routerLink]="['view-technicians']" *ngIf="genericService.hasRole(['A','SA'])">Technician List</li>
+                    <li class="sidebar-brand" [routerLink]="['report-master']" *ngIf="genericService.hasRole(['A','SA'])">Reports</li>
+                    <li class="sidebar-brand" [routerLink]="['manage-users']" *ngIf="genericService.hasRole(['A','SA'])">Manage Users</li>
+
+                    <!-- <li class="sidebar-brand" (click)="logout()">Logout</li> -->
+
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div id="page-content-wrapper">
+        <div class="page-content">
+            <div class="right-container" id="right-container">
+                <div class="container-fluid" style="padding-left:0px; padding-right:0px;">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <router-outlet></router-outlet>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<br><br><br><br>
+
+<div class="footer">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-4 col-sm-4 col-xs-4" style="margin-top:10px;">
+
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-4">
+            <div class="footer-copyright text-center py-3" style="margin-top:10px;">© 2020 Copyright:
+
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-4" style="margin-top:10px;">
+
+        </div>
+    </div>
+</div>
